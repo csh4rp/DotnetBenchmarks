@@ -5,27 +5,17 @@ namespace CacheLineBenchmark
 {
     public class Benchmark
     {
-        private const int DefaultPlatformObjectSizeInBytes = 24;
-        private const int DefaultIntArrayObjectSize = DefaultPlatformObjectSizeInBytes + 4;
-        private const int IntSizeInBytes = 4;
-        private const int CacheLineSizeInBytes = 64;
-        private const int CacheLinesToOccupy = 10;
         private const int ArraySize = 1024;
         private const int NumberOfIterations = 1000;
-        private static readonly int[][] ItemsArray;
+        private static readonly int[,] ItemsArray = new int[ArraySize, ArraySize];
 
         static Benchmark()
         {
-            const int bytesToOccupy = CacheLinesToOccupy * CacheLineSizeInBytes;
-            const int intsToDeclare = (bytesToOccupy - DefaultIntArrayObjectSize) / IntSizeInBytes;
-            ItemsArray = new int[intsToDeclare][];
-
-            for (var i = 0; i < intsToDeclare; i++)
+            for (var i = 0; i < ArraySize; i++)
             {
-                ItemsArray[i] = new int[ArraySize];
                 for (var j = 0; j < ArraySize; j++)
                 {
-                    ItemsArray[i][j] = 1;
+                    ItemsArray[i, j] = 1;
                 }
             }
         }
@@ -40,7 +30,7 @@ namespace CacheLineBenchmark
                 {
                     for (var j = 0; j < ArraySize; j++)
                     {
-                        sum += ItemsArray[i][j];
+                        sum += ItemsArray[i, j];
                     }
                 }
             
@@ -58,7 +48,7 @@ namespace CacheLineBenchmark
                 {
                     for (var j = 0; j < ItemsArray.Length; j++)
                     {
-                        sum += ItemsArray[j][i];
+                        sum += ItemsArray[j, i];
                     }
                 }
             
