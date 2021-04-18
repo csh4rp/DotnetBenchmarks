@@ -9,6 +9,9 @@ namespace EnumsBenchmark
     {
         private static readonly Options Option = Options.Delete;
         private static readonly OptionsEnumeration OptionEnumeration = OptionsEnumeration.Delete;
+        private static string _value;
+        private static Options _option;
+        private static OptionsEnumeration _optionsEnumeration;
 
         [Benchmark(Description = "Enum - ToString")]
         public void RunToStringForEnum()
@@ -19,31 +22,31 @@ namespace EnumsBenchmark
         [Benchmark(Description = "Enumeration - ToString")]
         public void RunToStringForEnumeration()
         {
-            _ = OptionEnumeration.ToString();
+            _value = OptionEnumeration.ToString();
         }
 
         [Benchmark(Description = "Enum - Description")]
         public void RunDescriptionForEnum()
         {
-            _ = Option.GetDescription();
+            _value = Option.GetDescription();
         }
 
         [Benchmark(Description = "Enumeration - Description")]
         public void RunDescriptionForEnumeration()
         {
-            _ = OptionEnumeration.Description;
+            _value = OptionEnumeration.Description;
         }
 
         [Benchmark(Description = "Enum - Parse")]
         public void RunParseForEnum()
         {
-            _ = Enum.Parse<Options>("Write");
+            _option = Enum.Parse<Options>("Write");
         }
 
         [Benchmark(Description = "Enumeration - Parse")]
         public void RunParseForEnumeration()
         {
-            _ = OptionsEnumeration.Parse("Write");
+            _optionsEnumeration = OptionsEnumeration.Parse("Write");
         }
     }
 }

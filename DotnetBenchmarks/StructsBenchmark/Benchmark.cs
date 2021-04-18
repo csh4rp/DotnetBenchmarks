@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using StructsBenchmark.Models;
 
@@ -8,10 +9,11 @@ namespace StructsBenchmark
     [MemoryDiagnoser]
     public class Benchmark
     {
-        private static PersonStruct Struct;
-        private static PersonBigStruct BigStruct;
-        private static PersonClass Class;
-
+        private static readonly PersonStruct Struct;
+        private static readonly PersonBigStruct BigStruct;
+        private static readonly PersonClass Class;
+        private static int _id;
+        
         static Benchmark()
         {
             Struct = new PersonStruct
@@ -29,9 +31,13 @@ namespace StructsBenchmark
                 LastName = "Last name",
                 Address = "Rzeszów, 30-100, ul. 3-go maja 31a",
                 Country = "Poland",
+                PositionId = 1,
                 Position = "Manager",
                 BirthDate = new DateTime(1990, 10, 10),
-                PositionId = 1
+                HireDate = new DateTime(2014, 05, 01),
+                ContractEndDate = new DateTime(2030, 01, 01),
+                Salary = 3000.00m,
+                LeaveDays = 20,
             };
 
             Class = new PersonClass
@@ -41,77 +47,71 @@ namespace StructsBenchmark
                 LastName = "Last name"
             };
         }
+        
+        [Benchmark(Description = "Class", Baseline = true)]
+        public void RunForClass()
+        {
+            _id = GetIdClass(Class);
+        }
+
+        [Benchmark(Description = "Class - interface")]
+        public void RunForClassInterface()
+        {
+            _id = GetIdInterface(Class);
+        }
 
         [Benchmark(Description = "Struct")]
         public void RunForStruct()
         {
-            _ = GetIdStruct(Struct);
+            _id = GetIdStruct(Struct);
         }
 
-        private static int GetIdStruct(PersonStruct @struct)
+        [Benchmark(Description = "Struct - in")]
+        public void RunForInStruct()
         {
-            return @struct.Id;
+            _id = GetIdInStruct(in Struct);
         }
 
-        [Benchmark(Description = "Struct ref")]
-        public void RunForRefStruct()
-        {
-            _ = GetIdRefStruct(ref Struct);
-        }
-
-        private static int GetIdRefStruct(ref PersonStruct @struct)
-        {
-            return @struct.Id;
-        }
-
-        [Benchmark(Description = "Struct interface")]
+        [Benchmark(Description = "Struct - interface")]
         public void RunForInterfaceStruct()
         {
-            _ = GetIdInterface(Struct);
+            _id = GetIdInterface(Struct);
         }
 
-        private static int GetIdInterface(IPerson person)
-        {
-            return person.Id;
-        }
-
-        [Benchmark(Description = "Class")]
-        public void RunForClass()
-        {
-            _ = GetIdClass(Class);
-        }
-
-        private static int GetIdClass(PersonClass @class)
-        {
-            return @class.Id;
-        }
-
-        [Benchmark(Description = "Class interface")]
-        public void RunForClassInterface()
-        {
-            _ = GetIdInterface(Class);
-        }
-        
         [Benchmark(Description = "Big struct")]
         public void RunForBigStruct()
         {
-            _ = GetIdBigStruct(BigStruct);
+            _id = GetIdBigStruct(BigStruct);
         }
 
-        private static int GetIdBigStruct(PersonBigStruct @struct)
+        [Benchmark(Description = "Big struct - in")]
+        public void RunForInBigStruct()
         {
-            return @struct.Id;
+            _id = GetInIdBigStruct(in BigStruct);
+        }
+        
+        [Benchmark(Description = "Big struct - interface")]
+        public void RunForInterfaceBigStruct()
+        {
+            _id = GetIdInterface(BigStruct);
         }
 
-        [Benchmark(Description = "Big struct ref")]
-        public void RunForRefBigStruct()
-        {
-            _ = GetIdRefBigStruct(ref BigStruct);
-        }
-
-        private static int GetIdRefBigStruct(ref PersonBigStruct @struct)
-        {
-            return @struct.Id;
-        }
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static int GetIdStruct(PersonStruct @struct) => @struct.Id;
+        
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static int GetIdInStruct(in PersonStruct @struct) => @struct.Id;
+        
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static int GetIdInterface(IPerson person) => person.Id;
+        
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static int GetIdClass(PersonClass @class) => @class.Id;
+        
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static int GetIdBigStruct(PersonBigStruct @struct) => @struct.Id;
+        
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static int GetInIdBigStruct(in PersonBigStruct @struct) => @struct.Id;
     }
 }

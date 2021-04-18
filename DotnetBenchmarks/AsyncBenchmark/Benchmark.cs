@@ -5,16 +5,16 @@ namespace AsyncBenchmark
 {
     public class Benchmark
     {
+        [Benchmark(Description = "Without await", Baseline = true)]
+        public async Task RunWithoutAwait()
+        {
+            await GetTask();
+        }
+        
         [Benchmark(Description = "With await")]
         public async Task RunWithAwait()
         {
             await GetAwaitedTask();
-        }
-        
-        [Benchmark(Description = "Without await")]
-        public async Task RunWithoutAwait()
-        {
-            await GetTask();
         }
 
         private static async Task GetAwaitedTask()

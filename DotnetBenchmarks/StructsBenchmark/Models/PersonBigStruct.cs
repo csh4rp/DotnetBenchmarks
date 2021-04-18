@@ -13,5 +13,9 @@ namespace StructsBenchmark.Models
         public string Position { get; set; }
         public string Country { get; set; }
         public string Address { get; set; }
+        public decimal Salary { get; set; }
+        public DateTime HireDate { get; set; }
+        public DateTime? ContractEndDate { get; set; }
+        public int LeaveDays { get; set; }
     }
 }

@@ -7,12 +7,12 @@ namespace LoopsBenchmark
     [MemoryDiagnoser]
     public class Benchmark
     {
-        public static IEnumerable<object[]> TestData()
+        public static IEnumerable<List<Person>> TestData()
         {
-            yield return new object[] {Create(10)};
-            yield return new object[] {Create(100)};
-            yield return new object[] {Create(1000)};
-            yield return new object[] {Create(10000)};
+            yield return Create(10);
+            yield return Create(100);
+            yield return Create(1000);
+            yield return Create(10000);
         }
 
         private static List<Person> Create(int numberOfItems)
@@ -20,7 +20,7 @@ namespace LoopsBenchmark
             var items = new List<Person>(numberOfItems);
             for (var i = 0; i < numberOfItems; i++)
             {
-                items[i] = new Person {Id = i};
+                items.Add(new Person {Id = i});
             }
 
             return items;

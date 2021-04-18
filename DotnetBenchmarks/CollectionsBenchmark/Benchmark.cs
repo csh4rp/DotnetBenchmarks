@@ -7,7 +7,9 @@ namespace CollectionsBenchmark
     [MemoryDiagnoser]
     public class Benchmark
     {
-        public IEnumerable<object[]> EnumerableItemsToFind()
+        private static bool _contains;
+        
+        public static IEnumerable<object[]> EnumerableItemsToFind()
         {
             yield return new object[]{ Enumerable.Range(0, 5).OrderBy(x => x % 3).ToArray(),
                 Enumerable.Range(0, 10).OrderBy(x => x % 2)};
@@ -17,7 +19,7 @@ namespace CollectionsBenchmark
                 Enumerable.Range(0, 1000).OrderBy(x => x % 2)};
         }
         
-        public IEnumerable<object[]> SetItemsToFind()
+        public static IEnumerable<object[]> SetItemsToFind()
         {
             yield return new object[]{ Enumerable.Range(0, 5).OrderBy(x => x % 3).ToArray(),
                 Enumerable.Range(0, 10).OrderBy(x => x % 2).ToHashSet()};
@@ -27,7 +29,7 @@ namespace CollectionsBenchmark
                 Enumerable.Range(0, 1000).OrderBy(x => x % 2).ToHashSet()};
         }
         
-        public IEnumerable<object[]> ListItemsToFind()
+        public static IEnumerable<object[]> ListItemsToFind()
         {
             yield return new object[]{ Enumerable.Range(0, 5).OrderBy(x => x % 3).ToArray(), 
                 Enumerable.Range(0, 10).OrderBy(x => x % 2).ToList()};
@@ -44,7 +46,7 @@ namespace CollectionsBenchmark
             var set = items.ToHashSet();
             for (var j = 0; j < itemsToFind.Length; j++)
             {
-                _ = set.Contains(itemsToFind[j]);
+                _contains = set.Contains(itemsToFind[j]);
             }
         }
         
@@ -54,7 +56,7 @@ namespace CollectionsBenchmark
         {
             for (var j = 0; j < itemsToFind.Length; j++)
             {
-                _ = items.Contains(itemsToFind[j]);
+                _contains = items.Contains(itemsToFind[j]);
             }
         }
         
@@ -65,7 +67,7 @@ namespace CollectionsBenchmark
             var list = items.ToList();
             for (var j = 0; j < itemsToFind.Length; j++)
             {
-                _ = list.Contains(itemsToFind[j]);
+                _contains = list.Contains(itemsToFind[j]);
             }
         }
 
@@ -75,7 +77,7 @@ namespace CollectionsBenchmark
         {
             for (var j = 0; j < itemsToFind.Length; j++)
             {
-                _ = items.Contains(itemsToFind[j]);
+                _contains = items.Contains(itemsToFind[j]);
             }
         }
 
@@ -85,7 +87,7 @@ namespace CollectionsBenchmark
         {
             for (var j = 0; j < itemsToFind.Length; j++)
             {
-                _ = items.Contains(itemsToFind[j]);
+                _contains = items.Contains(itemsToFind[j]);
             }
         }
     }

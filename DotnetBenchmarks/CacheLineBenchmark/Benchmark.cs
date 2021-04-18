@@ -6,7 +6,8 @@ namespace CacheLineBenchmark
     public class Benchmark
     {
         private const int ArraySize = 1024;
-        private static readonly int[,] ItemsArray = new int[ArraySize, ArraySize];
+        private static readonly int[,] Items = new int[ArraySize, ArraySize];
+        private static int _value;
 
         static Benchmark()
         {
@@ -14,19 +15,19 @@ namespace CacheLineBenchmark
             {
                 for (var j = 0; j < ArraySize; j++)
                 {
-                    ItemsArray[i, j] = 1;
+                    Items[i, j] = 1;
                 }
             }
         }
 
-        [Benchmark(Description = "By columns")]
+        [Benchmark(Description = "By columns", Baseline = true)]
         public void RunByColumns()
         {
-            for (var i = 0; i < ItemsArray.Length; i++)
+            for (var i = 0; i < ArraySize; i++)
             {
                 for (var j = 0; j < ArraySize; j++)
                 {
-                    _ = ItemsArray[i, j];
+                    _value = Items[i, j];
                 }
             }
         }
@@ -36,9 +37,9 @@ namespace CacheLineBenchmark
         {
             for (var i = 0; i < ArraySize; i++)
             {
-                for (var j = 0; j < ItemsArray.Length; j++)
+                for (var j = 0; j < ArraySize; j++)
                 {
-                    _ = ItemsArray[j, i];
+                    _value = Items[j, i];
                 }
             }
         }
