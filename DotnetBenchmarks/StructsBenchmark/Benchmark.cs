@@ -8,56 +8,44 @@ namespace StructsBenchmark
     [MemoryDiagnoser]
     public class Benchmark
     {
-        private const int NumberOfIterations = 1_00_000;
-        private const int NumberOfElements = 1000;
-        private static readonly PersonStruct[] StructsList = new PersonStruct[NumberOfElements];
-        private static readonly PersonBigStruct[] BigStructsList = new PersonBigStruct[NumberOfElements];
-        private static readonly PersonClass[] ClassList = new PersonClass[NumberOfElements];
+        private static PersonStruct Struct;
+        private static PersonBigStruct BigStruct;
+        private static PersonClass Class;
 
         static Benchmark()
         {
-            for (var i = 0; i < NumberOfElements; i++)
+            Struct = new PersonStruct
             {
-                StructsList[i] = new PersonStruct
-                {
-                    Id = i,
-                    FirstName = $"FirstName_{i}",
-                    LastName = $"LastName_{i}"
-                };
+                Id = 1,
+                FirstName = "First name",
+                LastName = "Last name"
+            };
 
-                ClassList[i] = new PersonClass
-                {
-                    Id = i,
-                    FirstName = $"FirstName_{i}",
-                    LastName = $"LastName_{i}"
-                };
-                
-                BigStructsList[i] = new PersonBigStruct
-                {
-                    Id = i,
-                    FirstName = $"FirstName_{i}",
-                    MiddleName = $"MiddleName_{i}",
-                    LastName = $"LastName_{i}",
-                    Position = $"Boss_{i}",
-                    BirthDate = new DateTime(1980, 1, 1).AddDays(i),
-                    PositionId = i,
-                    Country = "Poland",
-                    Address = $"Rzeszów, 30-100, ul. Wasilewskiego {i}a"
-                };
-            }
+            BigStruct = new PersonBigStruct
+            {
+                Id = 1,
+                FirstName = "First name",
+                MiddleName = "Middle name",
+                LastName = "Last name",
+                Address = "Rzeszów, 30-100, ul. 3-go maja 31a",
+                Country = "Poland",
+                Position = "Manager",
+                BirthDate = new DateTime(1990, 10, 10),
+                PositionId = 1
+            };
+
+            Class = new PersonClass
+            {
+                Id = 1,
+                FirstName = "First name",
+                LastName = "Last name"
+            };
         }
 
         [Benchmark(Description = "Struct")]
         public void RunForStruct()
         {
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                var sum = 0L;
-                for (var j = 0; j < StructsList.Length; j++)
-                {
-                    sum += GetIdStruct(StructsList[j]);
-                }
-            }
+            _ = GetIdStruct(Struct);
         }
 
         private static int GetIdStruct(PersonStruct @struct)
@@ -68,14 +56,7 @@ namespace StructsBenchmark
         [Benchmark(Description = "Struct ref")]
         public void RunForRefStruct()
         {
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                var sum = 0L;
-                for (var j = 0; j < StructsList.Length; j++)
-                {
-                    sum += GetIdRefStruct(ref StructsList[j]);
-                }
-            }
+            _ = GetIdRefStruct(ref Struct);
         }
 
         private static int GetIdRefStruct(ref PersonStruct @struct)
@@ -86,14 +67,7 @@ namespace StructsBenchmark
         [Benchmark(Description = "Struct interface")]
         public void RunForInterfaceStruct()
         {
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                var sum = 0L;
-                for (var j = 0; j < StructsList.Length; j++)
-                {
-                    sum += GetIdInterface(StructsList[j]);
-                }
-            }
+            _ = GetIdInterface(Struct);
         }
 
         private static int GetIdInterface(IPerson person)
@@ -104,14 +78,7 @@ namespace StructsBenchmark
         [Benchmark(Description = "Class")]
         public void RunForClass()
         {
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                var sum = 0L;
-                for (var j = 0; j < ClassList.Length; j++)
-                {
-                    sum += GetIdClass(ClassList[j]);
-                }
-            }
+            _ = GetIdClass(Class);
         }
 
         private static int GetIdClass(PersonClass @class)
@@ -122,27 +89,13 @@ namespace StructsBenchmark
         [Benchmark(Description = "Class interface")]
         public void RunForClassInterface()
         {
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                var sum = 0L;
-                for (var j = 0; j < ClassList.Length; j++)
-                {
-                    sum += GetIdInterface(ClassList[j]);
-                }
-            }
+            _ = GetIdInterface(Class);
         }
         
         [Benchmark(Description = "Big struct")]
         public void RunForBigStruct()
         {
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                var sum = 0L;
-                for (var j = 0; j < BigStructsList.Length; j++)
-                {
-                    sum += GetIdBigStruct(BigStructsList[j]);
-                }
-            }
+            _ = GetIdBigStruct(BigStruct);
         }
 
         private static int GetIdBigStruct(PersonBigStruct @struct)
@@ -153,14 +106,7 @@ namespace StructsBenchmark
         [Benchmark(Description = "Big struct ref")]
         public void RunForRefBigStruct()
         {
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                var sum = 0L;
-                for (var j = 0; j < BigStructsList.Length; j++)
-                {
-                    sum += GetIdRefBigStruct(ref BigStructsList[j]);
-                }
-            }
+            _ = GetIdRefBigStruct(ref BigStruct);
         }
 
         private static int GetIdRefBigStruct(ref PersonBigStruct @struct)

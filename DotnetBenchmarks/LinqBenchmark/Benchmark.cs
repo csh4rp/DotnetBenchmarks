@@ -36,12 +36,26 @@ namespace LinqBenchmark
 
         [Benchmark(Description = "For loop", Baseline = true)]
         [ArgumentsSource(nameof(TestData))]
-        public void RunLoopSearch(List<Person> items, int minId, int maxId)
+        public void RunForLoopSearch(List<Person> items, int minId, int maxId)
         {
             _result = new List<string>();
             for (var i = 0; i < items.Count; i++)
             {
                 var person = items[i];
+                if (person.Id >= minId && person.Id <= maxId)
+                {
+                    _result.Add(person.FirstName);
+                }
+            }
+        }
+        
+        [Benchmark(Description = "Foreach loop")]
+        [ArgumentsSource(nameof(TestData))]
+        public void RunForEachLoopSearch(List<Person> items, int minId, int maxId)
+        {
+            _result = new List<string>();
+            foreach (var person in items)
+            {
                 if (person.Id >= minId && person.Id <= maxId)
                 {
                     _result.Add(person.FirstName);

@@ -7,61 +7,60 @@ namespace LoopsBenchmark
     [MemoryDiagnoser]
     public class Benchmark
     {
-        private const int CollectionSize = 1000;
-        private static readonly List<Person> Items = new(CollectionSize);
-        private static readonly IEnumerable<Person> EnumerableItems = Items;
-        private const int NumberOfIterations = 100_000_000;
-        
-        static Benchmark()
+        public static IEnumerable<object[]> TestData()
         {
-            for (var i = 0; i < Items.Count; i++)
+            yield return new object[] {Create(10)};
+            yield return new object[] {Create(100)};
+            yield return new object[] {Create(1000)};
+            yield return new object[] {Create(10000)};
+        }
+
+        private static List<Person> Create(int numberOfItems)
+        {
+            var items = new List<Person>(numberOfItems);
+            for (var i = 0; i < numberOfItems; i++)
             {
-                Items[i] = new Person {Id = i};
+                items[i] = new Person {Id = i};
             }
+
+            return items;
         }
         
+
         [Benchmark(Description = "For loop", Baseline = true)]
-        public void RunFor()
+        [ArgumentsSource(nameof(TestData))]
+        public void RunFor(List<Person> items)
         {
-            for (var i = 0; i < NumberOfIterations; i++)
+            for (var i = 0; i < items.Count; i++)
             {
-                for (var j = 0; j < Items.Count; j++)
-                {
-                    Items[j].Id = 1;
-                }
+                items[i].Id = 1;
             }
         }
-        
+
         [Benchmark(Description = "List - Foreach loop")]
-        public void RunForEach()
+        [ArgumentsSource(nameof(TestData))]
+        public void RunForEach(List<Person> items)
         {
-            for (var i = 0; i < NumberOfIterations; i++)
+            foreach (var person in items)
             {
-                foreach (var person in Items)
-                {
-                    person.Id = 1;
-                }
+                person.Id = 1;
             }
         }
-        
+
         [Benchmark(Description = "List - foreach lambda loop")]
-        public void RunListForEach()
+        [ArgumentsSource(nameof(TestData))]
+        public void RunListForEach(List<Person> items)
         {
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                Items.ForEach(item => item.Id = 1);
-            }
+            items.ForEach(item => item.Id = 1);
         }
-        
+
         [Benchmark(Description = "IEnumerable - foreach loop")]
-        public void RunIEnumerableForEach()
+        [ArgumentsSource(nameof(TestData))]
+        public void RunIEnumerableForEach(IEnumerable<Person> items)
         {
-            for (var i = 0; i < NumberOfIterations; i++)
+            foreach (var person in items)
             {
-                foreach (var person in EnumerableItems)
-                {
-                    person.Id = 1;
-                }
+                person.Id = 1;
             }
         }
     }

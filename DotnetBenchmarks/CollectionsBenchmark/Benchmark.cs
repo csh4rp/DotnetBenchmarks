@@ -41,14 +41,10 @@ namespace CollectionsBenchmark
         [ArgumentsSource(nameof(EnumerableItemsToFind))]
         public void RunSearchForSet(int[] itemsToFind, IEnumerable<int> items)
         {
-            var sum = 0;
             var set = items.ToHashSet();
             for (var j = 0; j < itemsToFind.Length; j++)
             {
-                if (set.Contains(itemsToFind[j]))
-                {
-                    sum++;
-                }
+                _ = set.Contains(itemsToFind[j]);
             }
         }
         
@@ -56,13 +52,9 @@ namespace CollectionsBenchmark
         [ArgumentsSource(nameof(SetItemsToFind))]
         public void RunSearchForPreCreatedSet(int[] itemsToFind, HashSet<int> items)
         {
-            var sum = 0;
             for (var j = 0; j < itemsToFind.Length; j++)
             {
-                if (items.Contains(itemsToFind[j]))
-                {
-                    sum++;
-                }
+                _ = items.Contains(itemsToFind[j]);
             }
         }
         
@@ -70,14 +62,10 @@ namespace CollectionsBenchmark
         [ArgumentsSource(nameof(EnumerableItemsToFind))]
         public void RunSearchForPreCreatedList(int[] itemsToFind, IEnumerable<int> items)
         {
-            var sum = 0;
             var list = items.ToList();
             for (var j = 0; j < itemsToFind.Length; j++)
             {
-                if (list.Contains(itemsToFind[j]))
-                {
-                    sum++;
-                }
+                _ = list.Contains(itemsToFind[j]);
             }
         }
 
@@ -85,13 +73,9 @@ namespace CollectionsBenchmark
         [ArgumentsSource(nameof(ListItemsToFind))]
         public void RunSearchForList(int[] itemsToFind, List<int> items)
         {
-            var sum = 0;
             for (var j = 0; j < itemsToFind.Length; j++)
             {
-                if (items.Contains(itemsToFind[j]))
-                {
-                    sum++;
-                }
+                _ = items.Contains(itemsToFind[j]);
             }
         }
 
@@ -99,13 +83,9 @@ namespace CollectionsBenchmark
         [ArgumentsSource(nameof(EnumerableItemsToFind))]
         public void RunSearchForEnumerable(int[] itemsToFind, IEnumerable<int> items)
         {
-            var sum = 0;
             for (var j = 0; j < itemsToFind.Length; j++)
             {
-                if (items.Contains(itemsToFind[j]))
-                {
-                    sum++;
-                }
+                _ = items.Contains(itemsToFind[j]);
             }
         }
     }

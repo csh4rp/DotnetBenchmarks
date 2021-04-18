@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
 using BenchmarkDotNet.Attributes;
@@ -8,7 +9,6 @@ namespace IndirectCallBenchmark
 {
     public class Benchmark
     {
-        private const int NumberOfIterations = 100_000_000;
         private const int X = 1;
         private const int Y = 1;
         private static readonly ICalculator Calculator = new Calculator();
@@ -21,11 +21,11 @@ namespace IndirectCallBenchmark
             EmittedDelegate = CreateDelegate(typeof(Calculator));
             MethodInfo = typeof(Calculator).GetMethod(nameof(ICalculator.Add));
         }
-        
+
         public static Func<ICalculator, int, int, int> CreateDelegate(Type objType)
         {
             var methodInfo = objType.GetMethod(nameof(ICalculator.Add));
-            
+
             var method = new DynamicMethod("Add", typeof(int), new[] {typeof(ICalculator), typeof(int), typeof(int)});
             var ilGenerator = method.GetILGenerator();
             ilGenerator.Emit(OpCodes.Ldarg_0);
@@ -40,42 +40,26 @@ namespace IndirectCallBenchmark
         [Benchmark(Description = "Direct interface call", Baseline = true)]
         public void RunDirectInterfaceCall()
         {
-            var sum = 0L;
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                sum += Calculator.Add(X, Y);
-            }
+            _ = Calculator.Add(X, Y);
         }
-        
+
         [Benchmark(Description = "Emitted delegate call")]
         public void RunEmittedDelegateCall()
         {
-            var sum = 0L;
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                sum += EmittedDelegate(Calculator, X, Y);
-            }
+            _ = EmittedDelegate(Calculator, X, Y);
         }
-        
+
         [Benchmark(Description = "Dynamic call")]
         public void RunDynamicCall()
         {
-            var sum = 0L;
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                sum += ((dynamic) BoxedCalculator).Add(X, Y);
-            }
+            _ = ((dynamic) BoxedCalculator).Add(X, Y);
         }
-        
+
         [Benchmark(Description = "Reflection call")]
         public void RunReflectionCall()
         {
-            var sum = 0L;
-            var parameters = new object[] {X, Y};
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                sum += (int) MethodInfo.Invoke(BoxedCalculator, parameters);
-            }
+            // ReSharper disable once PossibleNullReferenceException
+            _ = (int) MethodInfo.Invoke(BoxedCalculator, new object[] {X, Y});
         }
     }
 }

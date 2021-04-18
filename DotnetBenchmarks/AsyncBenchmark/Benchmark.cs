@@ -5,24 +5,16 @@ namespace AsyncBenchmark
 {
     public class Benchmark
     {
-        private const int NumberOfIterations = 100_000_000;
-        
         [Benchmark(Description = "With await")]
         public async Task RunWithAwait()
         {
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                await GetAwaitedTask();
-            }
+            await GetAwaitedTask();
         }
         
         [Benchmark(Description = "Without await")]
         public async Task RunWithoutAwait()
         {
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                await GetTask();
-            }
+            await GetTask();
         }
 
         private static async Task GetAwaitedTask()

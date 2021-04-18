@@ -8,8 +8,6 @@ namespace StringsBenchmark
     [MemoryDiagnoser]
     public class Benchmark
     {
-        private static string _str;
-
         public static IEnumerable<object[]> ConcatParameters()
         {
             yield return new object[] {"First", "Second"};
@@ -30,14 +28,14 @@ namespace StringsBenchmark
         [ArgumentsSource(nameof(ConcatParameters))]
         public void RunStringConcat(object[] parameters)
         {
-            _str = string.Concat(parameters);
+            _ = string.Concat(parameters);
         }
         
         [Benchmark(Description = "String.Format")]
         [ArgumentsSource(nameof(FormatParameters))]
         public void RunStringFormat(string format, object[] parameters)
         {
-            _str = string.Format(format, parameters);
+            _ = string.Format(format, parameters);
         }
         
     }
