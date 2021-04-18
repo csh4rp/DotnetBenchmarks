@@ -1,75 +1,108 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
-
 namespace CollectionsBenchmark
 {
     [MemoryDiagnoser]
     public class Benchmark
     {
-        private const int NumberOfIterations = 10_000_000;
-        private const int NumberOfItems = 100;
-
-        private static readonly HashSet<int> ItemsSet = new(NumberOfIterations);
-        private static readonly List<int> ItemsList = new(NumberOfIterations);
-        private static readonly IEnumerable<int> ItemsEnumerable = ItemsList;
-
-        static Benchmark()
+        public IEnumerable<object[]> EnumerableItemsToFind()
         {
-            for (var i = 0; i < NumberOfItems; i++)
-            {
-                ItemsSet.Add(i);
-                ItemsList.Add(i);
-            }
+            yield return new object[]{ Enumerable.Range(0, 5).OrderBy(x => x % 3).ToArray(),
+                Enumerable.Range(0, 10).OrderBy(x => x % 2)};
+            yield return new object[]{ Enumerable.Range(0, 50).OrderBy(x => x % 3).ToArray(),
+                Enumerable.Range(0, 100).OrderBy(x => x % 2)};
+            yield return new object[]{ Enumerable.Range(0, 500).OrderBy(x => x % 3).ToArray(),
+                Enumerable.Range(0, 1000).OrderBy(x => x % 2)};
+        }
+        
+        public IEnumerable<object[]> SetItemsToFind()
+        {
+            yield return new object[]{ Enumerable.Range(0, 5).OrderBy(x => x % 3).ToArray(),
+                Enumerable.Range(0, 10).OrderBy(x => x % 2).ToHashSet()};
+            yield return new object[]{ Enumerable.Range(0, 50).OrderBy(x => x % 3).ToArray(),
+                Enumerable.Range(0, 100).OrderBy(x => x % 2).ToHashSet()};
+            yield return new object[]{ Enumerable.Range(0, 500).OrderBy(x => x % 3).ToArray(),
+                Enumerable.Range(0, 1000).OrderBy(x => x % 2).ToHashSet()};
+        }
+        
+        public IEnumerable<object[]> ListItemsToFind()
+        {
+            yield return new object[]{ Enumerable.Range(0, 5).OrderBy(x => x % 3).ToArray(), 
+                Enumerable.Range(0, 10).OrderBy(x => x % 2).ToList()};
+            yield return new object[]{ Enumerable.Range(0, 50).OrderBy(x => x % 3).ToArray(),
+                Enumerable.Range(0, 100).OrderBy(x => x % 2).ToList()};
+            yield return new object[]{ Enumerable.Range(0, 500).OrderBy(x => x % 3).ToArray(),
+                Enumerable.Range(0, 1000).OrderBy(x => x % 2).ToList()};
         }
 
-        [Benchmark(Description = "Search for set")]
-        public void RunSearchForSet()
+        [Benchmark(Description = "Set - not created")]
+        [ArgumentsSource(nameof(EnumerableItemsToFind))]
+        public void RunSearchForSet(int[] itemsToFind, IEnumerable<int> items)
         {
-            var sum = 0L;
-            for (var i = 0; i < NumberOfIterations; i++)
+            var sum = 0;
+            var set = items.ToHashSet();
+            for (var j = 0; j < itemsToFind.Length; j++)
             {
-                if (ItemsSet.Any() && ItemsSet.Contains(i))
+                if (set.Contains(itemsToFind[j]))
                 {
                     sum++;
                 }
             }
         }
         
-        [Benchmark(Description = "Search for list")]
-        public void RunSearchForList()
+        [Benchmark(Description = "Set - pre created")]
+        [ArgumentsSource(nameof(SetItemsToFind))]
+        public void RunSearchForPreCreatedSet(int[] itemsToFind, HashSet<int> items)
         {
-            var sum = 0L;
-            for (var i = 0; i < NumberOfIterations; i++)
+            var sum = 0;
+            for (var j = 0; j < itemsToFind.Length; j++)
             {
-                if (ItemsList.Any() && ItemsList.Contains(i))
-                {
-                    sum++;
-                }
-            }
-        }
-
-        [Benchmark(Description = "Search for enumerable")]
-        public void RunSearchForEnumerable()
-        {
-            var sum = 0L;
-            for (var i = 0; i < NumberOfIterations; i++)
-            {
-                if (ItemsEnumerable.Any() && ItemsEnumerable.Contains(i))
+                if (items.Contains(itemsToFind[j]))
                 {
                     sum++;
                 }
             }
         }
         
-        [Benchmark(Description = "Search for enumerable - materialized")]
-        public void RunSearchForEnumerableMaterialized()
+        [Benchmark(Description = "List - not created")]
+        [ArgumentsSource(nameof(EnumerableItemsToFind))]
+        public void RunSearchForPreCreatedList(int[] itemsToFind, IEnumerable<int> items)
         {
-            var sum = 0L;
-            for (var i = 0; i < NumberOfIterations; i++)
+            var sum = 0;
+            var list = items.ToList();
+            for (var j = 0; j < itemsToFind.Length; j++)
             {
-                var materialized = ItemsEnumerable.ToList();
-                if (materialized.Any() && materialized.Contains(i))
+                if (list.Contains(itemsToFind[j]))
+                {
+                    sum++;
+                }
+            }
+        }
+
+        [Benchmark(Description = "List - pre created")]
+        [ArgumentsSource(nameof(ListItemsToFind))]
+        public void RunSearchForList(int[] itemsToFind, List<int> items)
+        {
+            var sum = 0;
+            for (var j = 0; j < itemsToFind.Length; j++)
+            {
+                if (items.Contains(itemsToFind[j]))
+                {
+                    sum++;
+                }
+            }
+        }
+
+        [Benchmark(Description = "Enumerable")]
+        [ArgumentsSource(nameof(EnumerableItemsToFind))]
+        public void RunSearchForEnumerable(int[] itemsToFind, IEnumerable<int> items)
+        {
+            var sum = 0;
+            for (var j = 0; j < itemsToFind.Length; j++)
+            {
+                if (items.Contains(itemsToFind[j]))
                 {
                     sum++;
                 }

@@ -18,6 +18,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollectionsBenchmark", "Col
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnumsBenchmark", "EnumsBenchmark\EnumsBenchmark.csproj", "{978130C0-D7AC-4DAA-B871-563844EE239C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqBenchmark", "LinqBenchmark\LinqBenchmark.csproj", "{725FA5FB-4374-4DDF-93F9-1B941AD7925F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringsBenchmark", "StringsBenchmark\StringsBenchmark.csproj", "{7A4DE4D4-8B25-4AC3-8D42-2ABA790E8769}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +64,13 @@ Global
 		{978130C0-D7AC-4DAA-B871-563844EE239C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{978130C0-D7AC-4DAA-B871-563844EE239C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{978130C0-D7AC-4DAA-B871-563844EE239C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{725FA5FB-4374-4DDF-93F9-1B941AD7925F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{725FA5FB-4374-4DDF-93F9-1B941AD7925F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{725FA5FB-4374-4DDF-93F9-1B941AD7925F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{725FA5FB-4374-4DDF-93F9-1B941AD7925F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A4DE4D4-8B25-4AC3-8D42-2ABA790E8769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A4DE4D4-8B25-4AC3-8D42-2ABA790E8769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A4DE4D4-8B25-4AC3-8D42-2ABA790E8769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A4DE4D4-8B25-4AC3-8D42-2ABA790E8769}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
