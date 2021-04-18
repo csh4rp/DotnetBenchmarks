@@ -389,17 +389,17 @@ of memory it uses on the `Stack`), so you need to decide for yourself what's mor
 
 Here are the results:
 
-|        Method | parameters |          format |      Mean |    Error |   StdDev | Ratio | RatioSD |  Gen 0 | Gen 1 | Gen 2 | Allocated |
-|-------------- |----------- |---------------- |----------:|---------:|---------:|------:|--------:|-------:|------:|------:|----------:|
-| String.Concat |  Object[2] |               ? |  21.73 ns | 0.124 ns | 0.116 ns |  1.00 |    0.00 | 0.0210 |     - |     - |      88 B |
-| String.Concat |  Object[3] |               ? |  28.70 ns | 0.159 ns | 0.141 ns |  1.32 |    0.01 | 0.0249 |     - |     - |     104 B |
-| String.Concat |  Object[4] |               ? |  36.58 ns | 0.143 ns | 0.119 ns |  1.68 |    0.01 | 0.0287 |     - |     - |     120 B |
-| String.Concat |  Object[5] |               ? |  40.66 ns | 0.134 ns | 0.118 ns |  1.87 |    0.01 | 0.0344 |     - |     - |     144 B |
-|               |            |                 |           |          |          |       |         |        |       |       |           |
-| String.Format |  Object[2] |          {0}{1} |  70.70 ns | 0.223 ns | 0.198 ns |     ? |       ? | 0.0114 |     - |     - |      48 B |
-| String.Format |  Object[3] |       {0}{1}{2} |  88.10 ns | 0.193 ns | 0.171 ns |     ? |       ? | 0.0134 |     - |     - |      56 B |
-| String.Format |  Object[4] |    {0}{1}{2}{3} | 115.10 ns | 0.441 ns | 0.368 ns |     ? |       ? | 0.0153 |     - |     - |      64 B |
-| String.Format |  Object[5] | {0}{1}{2}{3}{4} | 129.27 ns | 0.228 ns | 0.213 ns |     ? |       ? | 0.0191 |     - |     - |      80 B |
+|        Method | parameters |          format |      Mean |    Error |   StdDev | Gen 0  | Gen 1 | Gen 2 | Allocated |
+|-------------- |----------- |---------------- |----------:|---------:|---------:|-------:|------:|------:|----------:|
+| String.Concat |  Object[2] |               ? |  21.73 ns | 0.124 ns | 0.116 ns | 0.0210 |     - |     - |      88 B |
+| String.Concat |  Object[3] |               ? |  28.70 ns | 0.159 ns | 0.141 ns | 0.0249 |     - |     - |     104 B |
+| String.Concat |  Object[4] |               ? |  36.58 ns | 0.143 ns | 0.119 ns | 0.0287 |     - |     - |     120 B |
+| String.Concat |  Object[5] |               ? |  40.66 ns | 0.134 ns | 0.118 ns | 0.0344 |     - |     - |     144 B |
+|               |            |                 |           |          |          |        |       |       |           |
+| String.Format |  Object[2] |          {0}{1} |  70.70 ns | 0.223 ns | 0.198 ns | 0.0114 |     - |     - |      48 B |
+| String.Format |  Object[3] |       {0}{1}{2} |  88.10 ns | 0.193 ns | 0.171 ns | 0.0134 |     - |     - |      56 B |
+| String.Format |  Object[4] |    {0}{1}{2}{3} | 115.10 ns | 0.441 ns | 0.368 ns | 0.0153 |     - |     - |      64 B |
+| String.Format |  Object[5] | {0}{1}{2}{3}{4} | 129.27 ns | 0.228 ns | 0.213 ns | 0.0191 |     - |     - |      80 B |
 
 **11. LINQ (LinqBenchmark)**
 
