@@ -1,7 +1,6 @@
-﻿namespace VirtualDispatchBenchmark.Models
+﻿namespace VirtualDispatchBenchmark.Models;
+
+public abstract class BaseCalculator : ICalculator
 {
-    public abstract class BaseCalculator : ICalculator
-    {
-        public virtual int Add(int x, int y) => x + y;
-    }
+    public virtual int Add(int x, int y) => x + y;
 }

@@ -1,7 +1,6 @@
-﻿namespace VirtualDispatchBenchmark.Models
+﻿namespace VirtualDispatchBenchmark.Models;
+
+public interface ICalculator
 {
-    public interface ICalculator
-    {
-        int Add(int x, int y);
-    }
+    int Add(int x, int y);
 }

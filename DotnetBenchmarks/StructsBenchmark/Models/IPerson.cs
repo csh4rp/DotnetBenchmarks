@@ -1,9 +1,10 @@
-namespace StructsBenchmark.Models
+namespace StructsBenchmark.Models;
+
+public interface IPerson
 {
-    public interface IPerson
-    {
-        int Id { get; set; }
-        string FirstName { get; set; }
-        string LastName { get; set; }
-    }
+    int Id { get; set; }
+
+    string FirstName { get; set; }
+
+    string LastName { get; set; }
 }

@@ -1,13 +1,4 @@
-﻿using System;
-using BenchmarkDotNet.Running;
+﻿using BenchmarkDotNet.Running;
+using StructsBenchmark;
 
-namespace StructsBenchmark
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            BenchmarkRunner.Run<Benchmark>();
-        }
-    }
-}
+BenchmarkRunner.Run<Benchmark>();

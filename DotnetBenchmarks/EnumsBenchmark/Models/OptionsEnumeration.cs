@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-
 namespace EnumsBenchmark.Models
 {
     public sealed class OptionsEnumeration : Enumeration<OptionsEnumeration>
@@ -10,7 +7,9 @@ namespace EnumsBenchmark.Models
         }
 
         public static readonly OptionsEnumeration Read = new(0, "Read", "Read");
+    
         public static readonly OptionsEnumeration Write = new(1, "Write", "Write");
+    
         public static readonly OptionsEnumeration Delete = new(2, "Delete", "Delete");
     }
 }

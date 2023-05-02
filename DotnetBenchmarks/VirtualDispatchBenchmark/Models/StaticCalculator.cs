@@ -1,7 +1,6 @@
-﻿namespace VirtualDispatchBenchmark.Models
+﻿namespace VirtualDispatchBenchmark.Models;
+
+public class StaticCalculator
 {
-    public class StaticCalculator
-    {
-        public static int Add(int x, int y) => x + y;
-    }
+    public static int Add(int x, int y) => x + y;
 }

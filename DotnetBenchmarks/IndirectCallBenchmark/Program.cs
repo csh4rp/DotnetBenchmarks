@@ -1,14 +1,4 @@
-﻿using System;
-using BenchmarkDotNet.Running;
-using IndirectCallBenchmark.Models;
+﻿using BenchmarkDotNet.Running;
+using IndirectCallBenchmark;
 
-namespace IndirectCallBenchmark
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            BenchmarkRunner.Run<Benchmark>();
-        }
-    }
-}
+BenchmarkRunner.Run<Benchmark>();

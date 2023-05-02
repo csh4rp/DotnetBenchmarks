@@ -1,15 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using BenchmarkDotNet.Running;
-using EnumsBenchmark.Models;
 
-namespace EnumsBenchmark
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            BenchmarkRunner.Run(Assembly.GetExecutingAssembly());
-        }
-    }
-}
+BenchmarkRunner.Run(Assembly.GetExecutingAssembly());

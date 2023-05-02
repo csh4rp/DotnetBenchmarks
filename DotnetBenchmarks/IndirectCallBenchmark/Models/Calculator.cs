@@ -1,7 +1,6 @@
-﻿namespace IndirectCallBenchmark.Models
+﻿namespace IndirectCallBenchmark.Models;
+
+public class Calculator : ICalculator
 {
-    public class Calculator : ICalculator
-    {
-        public int Add(int x, int y) => x + y;
-    }
+    public int Add(int x, int y) => x + y;
 }

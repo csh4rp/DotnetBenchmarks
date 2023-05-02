@@ -1,12 +1,4 @@
 ﻿using BenchmarkDotNet.Running;
+using FalseSharingBenchmark;
 
-namespace FalseSharingBenchmark
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            BenchmarkRunner.Run<Benchmark>();
-        }
-    }
-}
+BenchmarkRunner.Run<Benchmark>();

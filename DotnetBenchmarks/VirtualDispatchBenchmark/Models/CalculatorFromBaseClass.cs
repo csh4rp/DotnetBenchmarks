@@ -1,7 +1,6 @@
-﻿namespace VirtualDispatchBenchmark.Models
+﻿namespace VirtualDispatchBenchmark.Models;
+
+public class CalculatorFromBaseClass : BaseCalculator
 {
-    public class CalculatorFromBaseClass : BaseCalculator
-    {
-        public override int Add(int x, int y) => x + y;
-    }
+    public override int Add(int x, int y) => x + y;
 }
